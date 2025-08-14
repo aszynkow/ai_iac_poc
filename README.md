@@ -3,7 +3,7 @@ Deploys AI basic infrastructure
 
 This guide helps you install and use **AI POC Infrastructure**.
 
-![AI POC Infrastructure](images/Aaipoc_architecture_infra.png)
+![AI POC Infrastructure](images/aipoc_architecture_infra.png)
 
 
 1. Recommended to be executed by a member of Tenancy Administrator group. 
