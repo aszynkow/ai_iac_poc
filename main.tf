@@ -42,4 +42,8 @@ locals {
  waf_policy_name = join(local.separator,[var.environment_name,"wafpolicy"])
  cus_image_url = tolist(split(",",var.cus_image_url))
  bastion_client_cidr_block_allow_list = tolist(split(",",var.bastion_client_cidr_block_allow_list))
+ 
+ is_flex_shape = length(regexall("Flex", var.gpu_node_shape)) > 0 ? true : false
+ gpu_instance_name = join(local.separator,[var.environment_name,"gpu"])
+ gpu_vm_count = var.enable_gpu ? 1 : 0
 }

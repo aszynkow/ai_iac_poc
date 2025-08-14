@@ -92,6 +92,29 @@ description = "Instance shape to use for master instance."
  default     = ["VM.Standard.E5.Flex","VM.Standard.E5.Flex"]
 }
 
+variable "gpu_node_shape" {
+description = "Instance shape to use for master instance."
+ default     = "VM.GPU.A10.1"
+}
+
+variable "gpu_node_flex_shape_ocpus" {
+  description = "Flex Instance shape OCPUs"
+  default = 15
+}
+
+variable "gpu_node_flex_shape_memory" {
+  description = "Flex Instance shape Memory (GB)"
+  default = 240
+}
+
+variable gpu_boot_szie_gbs{
+  default = 100
+}
+
+variable enable_gpu {
+  default = false
+}
+
 variable aux_shape {
  default = "VM.Standard.E5.Flex"
 }

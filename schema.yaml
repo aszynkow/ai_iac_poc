@@ -23,6 +23,7 @@ variableGroups:
     variables:
       - ssh_public_key
       - cus_image_url
+      - enable_gpu
   
   - title: PostGD Configuration
     required: true
@@ -79,6 +80,12 @@ variables:
     visibale: true
     title: "Enable SSL on Laod Balancer"
     description: "Creates HTTPS load balancer lisntener."
+  
+  enable_gpu:
+    type: boolean
+    visibale: true
+    title: "Provision GPU"
+    description: "Provisions GPU for custom LLM"
 
   listener_ssl_configuration_certificate_id:
     type: string
@@ -156,6 +163,21 @@ variables:
     description: Public SSH Key to access VM via SSH
     visible: true
 #HIDE those
+  gpu_node_shape:
+    type: string
+    visible: false
+
+  gpu_node_flex_shape_ocpus:
+    type: string
+    visible: false
+
+  gpu_node_flex_shape_memory:
+    type: string
+    visible: false
+
+  gpu_boot_szie_gbs:
+    type: string
+    visible: false
 
   vm_instance_name:
     type: string

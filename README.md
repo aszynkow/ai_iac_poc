@@ -21,7 +21,7 @@ This guide helps you install and use **AI POC Infrastructure**.
 
 ## Step 2: Deploy the AI POC infrastructure
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/aszynkow/ai_iac_poc/raw/main/releases/download/v1.0.1/aipoc.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/aszynkow/ai_iac_poc/raw/main/releases/download/v1.0.2/aipoc.zip)
 
 1. Click **Deploy to Oracle Cloud** above.
 2. In **Create Stack**:
