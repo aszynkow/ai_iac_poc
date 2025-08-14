@@ -29,7 +29,7 @@ This guide helps you install and use **AI POC Infrastructure**.
    - Select the **compartment** where you want OCI AI POC deployed.
    - Provide any additional parameters (such as VCN CIDR and providing public ssh key and ADB/OpenSearch cluster user credentials) according to your preferences.
 3. Click **Next**, then **Create**, and finally choose **Run apply** to provision your cluster.
-4. Monitor the progress in **Resource Manager → Stacks**. Once the status is **Succeeded**, you have a functional 2 x A10 GPU VMs, APEX/ADB, OpenSearch Cluster, OBject Store bucket and Bastion Service to host and work with OCI AI POC.
+4. Monitor the progress in **Resource Manager → Stacks**. Once the status is **Succeeded**, you have a A10 GPU VM, WAF/Load Balancer, PostgreSQl DB, Object Store bucket and Bastion Service to host and work with OCI AI POC.
 
 ## Cleanup
 
