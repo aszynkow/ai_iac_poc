@@ -1,0 +1,3 @@
+id,display_name,dns_label,cidr_block,netnum,private_boolean
+1,sub1,sub1,/28,0,false
+2,sub2,sub2,/25,1,true

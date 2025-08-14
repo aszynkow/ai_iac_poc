@@ -1,0 +1,6 @@
+id,config_key,overriden_config_value
+1,max_slot_wal_keep_size,-1
+2,max_wal_senders,64
+3,track_commit_timestamp,1
+4,wal_level,logical
+5,oci.admin_enabled_extensions,"pglogical,vector,pg_stat_statements,pg_partman"

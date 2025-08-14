@@ -1,0 +1,349 @@
+title: AI Poc Infrastructure Template
+description: Provisions AIPoc infrastructure
+informationalText: "The Resource Manager Stack creates the infrastructure components (VCN, VMs, PostgressSQL, OS bucket, Bastion Service, Load Balancer)."
+schemaVersion: 1.1.0
+version: "20200822"
+locale: "en"
+
+variableGroups: 
+  - title: "AI Poc Configuration"
+    visible: true
+    variables:
+      - compartment_ocid
+      - environment_name
+  
+  - title: "Networking"
+    visible: true
+    variables:
+      - spoke_cidr_block
+      - bastion_client_cidr_block_allow_list
+
+  - title: "VMs Configuration"
+    visible: true
+    variables:
+      - ssh_public_key
+      - cus_image_url
+  
+  - title: PostGD Configuration
+    required: true
+    visible: true
+    variables:
+      - pgsql_user
+      - pgsql_password
+
+  - title: "Load Balancer"
+    visible: true
+    variables:
+      - enable_https
+      - listener_ssl_configuration_certificate_id
+
+#  - title: "Tags"
+ #   visible: true
+  #  variables:
+   #   - freeform_tags
+
+variables:
+  # Hidden variables
+  tenancy_ocid:
+    title: Tenancy ID
+    description: The Oracle Cloud Identifier (OCID) for your tenancy
+    type: string
+    required: true
+    visible: false
+
+  region:
+    title: Region
+    description: The region in which to create all resources
+    type: oci:identity:region:name
+    required: true
+    visible: false
+
+  user_ocid:
+    title: User ID
+    description: The Oracle Cloud Identifier (OCID) for the user
+    type: string
+    visible: false
+
+  fingerprint:
+    title: Private Key Fingerprint
+    type: string
+    visible: false
+
+  private_key_path:
+    title: Private Key Path
+    type: string
+    visible: false
+
+  enable_https:
+    type: boolean
+    visibale: true
+    title: "Enable SSL on Laod Balancer"
+    description: "Creates HTTPS load balancer lisntener."
+
+  listener_ssl_configuration_certificate_id:
+    type: string
+    title: "Provide SSL certificate"
+    description: "Provide existing OCI certificate for a Load Balancer"
+    visible: ${enable_https}
+    required: true
+
+  pgsql_password:
+    type: password
+    title: "PostgreSQL DB Password"
+    description: "The password for PostgreSQL user. Must meet Oracle Cloud password complexity rules."
+    required: true
+    secret: true
+    confirmation: true
+  
+  environment_name:
+    type: string
+    title: "Environment name"
+    description: "POC environemnt/compartment name. Also a suffix for all components created."
+    required: true
+    secret: false
+  
+  cus_image_url:
+    type: array
+    items:
+      type: string
+    title:  "Export URLs"
+    minItems: 2
+    description: "URLS to import respectively a frontend and backend VM"
+    required: true
+
+  bastion_client_cidr_block_allow_list:
+    type: array
+    items:
+       type: string
+       pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/(?:[0-9]|[12][0-9]|3[0-2])$"
+    minItems: 1
+    uniqueItems: true
+    title:  "Bastion allow list"
+    description: "CIDR block allowed as sources by a Bastion Service"
+    required: true
+
+  spoke_cidr_block:
+    type: array
+    items:
+      type: string
+      pattern: "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/(?:[0-9]|[12][0-9]|3[0-2])$"
+    minItems: 1
+    maxItems: 1
+    title:  "VCN CIDR block"
+    description: "CIDR block for a VCN. Public subnet get creates from this CIDR as /28 as private subnet as /25"
+    required: true
+    secret: false
+
+  pgsql_user:
+    type: string
+    title: "PostgreSQL DB User"
+    description: "PostgreSQL user."
+    required: true
+    secret: false
+    
+  compartment_ocid:
+    title: Target Compartment
+    description: The target compartment to provision AIPoc infrastructure.
+    type: oci:identity:compartment:id
+    required: true
+    visible: true
+    default: compartment_ocid
+
+  ssh_public_key:
+    type: oci:core:ssh:publickey
+    required: true
+    title: Public SSH Key string
+    description: Public SSH Key to access VM via SSH
+    visible: true
+#HIDE those
+
+  vm_instance_name:
+    type: string
+    visible: false
+  
+  availability_domain_name:
+    type: string
+    visible: false
+
+  instance_count:
+    type: string
+    visible: false
+
+  maximum_bandwidth_in_mbps:
+    type: string
+    visible: false
+ 
+  release:
+    type: string
+    visible: false
+
+  instance_os:
+    type: string
+    visible: false
+
+  linux_os_version:
+    type: string
+    visible: false
+
+  ssh_authorized_keys:
+    type: string
+    visible: false
+
+  vm_boot_volume_size_in_gbs:
+    type: string
+    visible: false
+
+  llm_vm_count:
+    type: string
+    visible: false
+
+  node_flex_shape_ocpus:
+    type: string
+    visible: false
+
+  node_flex_shape_memory:
+    type: string
+    visible: false
+
+  node_shape:
+    type: string
+    visible: false
+
+  aux_shape:
+    type: string
+    visible: false
+
+  aux_ocpu:
+    type: string
+    visible: false
+
+  aux_mem:
+      type: string
+      visible: false
+
+  osb1_storage_tier:
+      type: string
+      visible: false
+
+  osb1_public_access_type:
+      type: string
+      visible: false
+
+  osb1_freeform_tags:
+      type: string
+      visible: false
+
+  osb1_name:
+      type: string
+      visible: false
+
+  bastion_name:
+      type: string
+      visible: false
+
+  cus_image_name:
+      type: string
+      visible: false
+
+  pgsql_db_name:
+      type: string
+      visible: false
+
+  db_version:
+      type: string
+      visible: false
+
+  instance_memory_size_in_gbs:
+      type: string
+      visible: false
+
+  instance_ocpu_count:
+      type: string
+      visible: false
+
+  pgsql_shape:
+      type: string
+      visible: false
+
+  pgsql_iops:
+      type: string
+      visible: false
+
+  pgsql_is_reader_endpoint_enabled:
+      type: string
+      visible: false
+
+  pgsql_backup_kind:
+      type: string
+      visible: false
+
+  pgsql_is_regionally_durable:
+      type: string
+      visible: false
+
+  pgsql_system_type:
+      type: string
+      visible: false
+
+  db_config_or_instance_memory_size_in_gbs:
+      type: string
+      visible: false
+
+  db_config_or_instance_ocpu_count:
+      type: string
+      visible: false
+
+  db_config_or_is_flexible:
+      type: string
+      visible: false
+
+  db_config_or_shape:
+      type: string
+      visible: false
+
+  db_config_compatible_shape:
+      type: string
+      visible: false
+
+  lb_shape:
+      type: string
+      visible: false
+
+  minimum_bandwidth_in_mbps:
+      type: string
+      visible: false
+
+  https_health_check_path:
+    type: string
+    visible: false
+
+ # db_admin_password:
+  #  title: Database Admin User Password
+   # description: "The password for the database. Password must be 9 to 30 characters and contain at least 2 uppercase, 2 lowercase, 2 special, and 2 numeric characters. The special characters must be _, #, or -. For example, XYh1z0#_d"
+    #type: password
+   # pattern: "^(?=.*[a-z].*[a-z])(?=.*[A-Z].*[A-Z])(?=.*\\d.*\\d)(?=.*[-_#].*[-_#])[a-zA-Z0-9\\S]{9,32}$"
+   # required: true
+   # visible: ebs_database_required
+ 
+#  bastion_user:
+#    title: Bastion user
+#    description: bastion user
+#    type: string
+#    default: opc
+#    visible: false
+
+#  freeform_tags:
+#    type: string
+#    visible: true
+
+#outputGroups:
+#  - title: Outputs
+#    outputs:
+#      - BastionPublicIPs
+
+
+outputs:
+#  BastionPublicIPs:
+#    title: "Bastion Host Details"
+#    type: string
+#    visible: true

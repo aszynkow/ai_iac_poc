@@ -1,0 +1,1 @@
+zip ./releases/download/v1.0.1/aipoc.zip *.tf *.yaml modules/*/*.tf config_files/*.csv
